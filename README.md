@@ -1,2 +1,2 @@
 # Streamer
-Music Streaming made in SEAN stack
+Music Streaming app made in SEAN stack
