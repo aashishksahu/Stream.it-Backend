@@ -5,37 +5,37 @@
 CREATE DATABASE IF NOT EXISTS streamer;
 use streamer;
 create table IF NOT EXISTS audioserver(
-    id INT PRIMARY KEY,
-    title TEXT NOT NULL,
-    artist TEXT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY ,
+    title VARCHAR(20) NOT NULL,
+    artist VARCHAR(20) NOT NULL,
     rating INT,
     likes INT,
-    label TEXT NOT NULL,
-    albumart TEXT NOT NULL,
-    audiofilepath TEXT NOT NULL
+    label VARCHAR(20) NOT NULL,
+    albumart VARCHAR(100) NOT NULL,
+    audiofilepath VARCHAR(100) NOT NULL
 );
 create table IF NOT EXISTS users(
-    id INT PRIMARY KEY,
-    username TEXT NOT NULL,
-    usertype TEXT NOT NULL,
-    passkey TEXT NOT NULL,
-    email TEXT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    usertype VARCHAR(20) NOT NULL,
+    passkey VARCHAR(20) NOT NULL,
+    email VARCHAR(20) NOT NULL UNIQUE,
     DOB DATE NOT NULL
 );
 create table IF NOT EXISTS favourites(
-    favid INT PRIMARY KEY,
+    favid INT AUTO_INCREMENT PRIMARY KEY,
     userid INT NOT NULL,
     audioid INT NOT NULL,
-    FOREIGN KEY (userid) references users(id),
-    FOREIGN KEY (audioid) references audioserver(id)
+    CONSTRAINT FK_FAV_USERID_USER_ID FOREIGN KEY (userid) references users(id),
+    CONSTRAINT FK_FAV_AUDIOID_AUDIOSERVER_ID FOREIGN KEY (audioid) references audioserver(id)
 );
 create table IF NOT EXISTS comments(
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     userid INT NOT NULL,
     audioid INT NOT NULL,
-    comment TEXT NOT NULL,
-    FOREIGN KEY (userid) references users(id),
-    FOREIGN KEY (audioid) references audioserver(id)
+    comment VARCHAR(100) NOT NULL,
+    CONSTRAINT FK_COMMENTS_USERID_USER_ID FOREIGN KEY (userid) references users(id),
+    CONSTRAINT FK_COMMENTS_AUDIOID_AUDIOSERVER_ID FOREIGN KEY (audioid) references audioserver(id)
 );
 
 insert INTO audioserver(
