@@ -29,6 +29,14 @@ create table IF NOT EXISTS favourites(
     FOREIGN KEY (userid) references users(id),
     FOREIGN KEY (audioid) references audioserver(id)
 );
+create table IF NOT EXISTS comments(
+    id INT PRIMARY KEY,
+    userid INT NOT NULL,
+    audioid INT NOT NULL,
+    comment TEXT NOT NULL,
+    FOREIGN KEY (userid) references users(id),
+    FOREIGN KEY (audioid) references audioserver(id)
+);
 
 insert INTO audioserver(
         id,
@@ -85,4 +93,4 @@ VALUES(
         "/home/aashish/WorkShop/streamer_backend/assets/audio/michael_jackson_im_bad.mp3"
     );
 insert INTO users (id, username, usertype, passkey, email, DOB)
-VALUES(100, "user1", "basic", "testpass", "a@b.com", "12-12-1990");
+VALUES(100, "user1", "basic", "testpass", "a@b.com", "1990-12-12");
