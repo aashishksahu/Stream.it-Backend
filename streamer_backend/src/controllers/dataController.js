@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var conn = require('../database/createConnection');
+var dataModel = require("../Model/dataModel");
 
 var dataController = {
     topCharts(req, res) {
@@ -9,7 +10,7 @@ var dataController = {
 
             if (isVerified != undefined) {
 
-                conn.query("SELECT * FROM audioserver ORDER BY likes DESC;", (error, results) => {
+                conn.query("SELECT id, title, artist, likes, label, albumart FROM audioserver ORDER BY likes DESC;", (error, results) => {
                     if (error) {
                         res.send({
                             code: 400,
@@ -17,15 +18,10 @@ var dataController = {
                         })
                     } else {
 
-                        ///////////// TODO /////////////
-                        // Create Payload for response with everything
-                        // except the song file and send the album art 
-                        // as image
-
-                        // res.send({
-                        //     code: 200,
-                        //     "payload": results
-                        // })
+                        res.send({
+                            code: 200,
+                            "resultSet": dataModel.topChartsPayload(results)
+                        })
 
                     }
                 })
