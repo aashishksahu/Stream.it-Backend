@@ -8,7 +8,6 @@ create table IF NOT EXISTS audioserver(
     id INT AUTO_INCREMENT PRIMARY KEY ,
     title VARCHAR(20) NOT NULL,
     artist VARCHAR(20) NOT NULL,
-    rating INT,
     likes INT,
     label VARCHAR(20) NOT NULL,
     albumart VARCHAR(100) NOT NULL,

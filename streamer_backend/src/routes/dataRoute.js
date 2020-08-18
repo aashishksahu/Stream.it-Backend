@@ -1,5 +1,7 @@
 const dataController = require("../controllers/dataController");
+const express = require("express");
+const dataRouter = express.Router();
 
-router.get('/top', dataController.topCharts);
+dataRouter.get('/top', dataController.topCharts);
 
-module.exports = router;
+module.exports = dataRouter;

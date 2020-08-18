@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-
+require('dotenv').config()
 var authroute = require("./src/routes/authRoute");
+var dataroute = require("./src/routes/dataRoute");
 
 var app = express();
 const port = 3030;
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 
 
 app.use('/auth', authroute);
+app.use('/music', dataroute);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
