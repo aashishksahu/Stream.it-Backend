@@ -9,4 +9,5 @@ This is the backend
    * NodeJS
    * ExpressJS
    * JWT Authorisation
+   * MySQL
    
