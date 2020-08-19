@@ -9,7 +9,7 @@ var dataModel = {
         return new Buffer(img).toString("base64");
     },
 
-    topChartsPayload(results){
+    createMetaPayload(results){
 
         var payload = [];
 
@@ -19,8 +19,9 @@ var dataModel = {
                 title: results[i]["title"],
                 artist: results[i]["artist"],
                 likes: results[i]["likes"],
+                dislikes: results[i]["dislikes"],
                 label: results[i]["label"],
-                albumart: this.img2base64(results[i]["albumart"])
+                albumart: this._img2base64(results[i]["albumart"])
             })
         }
 

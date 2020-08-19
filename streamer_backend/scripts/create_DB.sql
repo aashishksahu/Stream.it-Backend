@@ -8,7 +8,8 @@ create table IF NOT EXISTS audioserver(
     id INT AUTO_INCREMENT PRIMARY KEY ,
     title VARCHAR(20) NOT NULL,
     artist VARCHAR(20) NOT NULL,
-    likes INT,
+    likes INT DEFAULT 0,
+    dislikes INT DEFAULT 0,
     label VARCHAR(20) NOT NULL,
     albumart VARCHAR(100) NOT NULL,
     audiofilepath VARCHAR(100) NOT NULL
@@ -24,7 +25,7 @@ create table IF NOT EXISTS users(
 create table IF NOT EXISTS favourites(
     favid INT AUTO_INCREMENT PRIMARY KEY,
     userid INT NOT NULL,
-    audioid INT NOT NULL,
+    audioid INT NOT NULL UNIQUE,
     CONSTRAINT FK_FAV_USERID_USER_ID FOREIGN KEY (userid) references users(id),
     CONSTRAINT FK_FAV_AUDIOID_AUDIOSERVER_ID FOREIGN KEY (audioid) references audioserver(id)
 );
