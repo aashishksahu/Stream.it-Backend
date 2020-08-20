@@ -89,7 +89,7 @@
 					"urlencoded": [
 						{
 							"key": "username",
-							"value": "user2",
+							"value": "user3",
 							"type": "text"
 						},
 						{
@@ -104,7 +104,7 @@
 						},
 						{
 							"key": "email",
-							"value": "b@c.com",
+							"value": "ddb@cdd.com",
 							"type": "text"
 						},
 						{
@@ -178,12 +178,12 @@
 					"urlencoded": [
 						{
 							"key": "userid",
-							"value": "100",
+							"value": "101",
 							"type": "text"
 						},
 						{
 							"key": "audioid",
-							"value": "2",
+							"value": "1",
 							"type": "text"
 						}
 					]
@@ -206,7 +206,7 @@
 		{
 			"name": "ADD_LIKES",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
@@ -219,7 +219,12 @@
 					"urlencoded": [
 						{
 							"key": "audioid",
-							"value": "1",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "userid",
+							"value": "102",
 							"type": "text"
 						}
 					]
@@ -240,13 +245,58 @@
 			"response": []
 		},
 		{
-			"name": "ADD_DISLIKES",
+			"name": "REMOVE_FAVOURITES",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIyIiwiaWF0IjoxNTk3NzMwNjg3fQ.SP75nVzd3mexNRwPBRT43SyL4QLSkG9hUPqJG26vtwI",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTk3NzcwNzA1fQ.nfQgsBYM0J6lC6Zl6hVsNBbF0zkHxFzf7bu2R9-afUs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "favid",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3030/music/removeFavourites?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"music",
+						"removeFavourites"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_LIKE_COUNT",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTk3NzcwNzA1fQ.nfQgsBYM0J6lC6Zl6hVsNBbF0zkHxFzf7bu2R9-afUs",
 						"type": "text"
 					}
 				],
@@ -261,7 +311,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:3030/music/addDislikes",
+					"raw": "http://localhost:3030/music/getLikeCount",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -269,7 +319,7 @@
 					"port": "3030",
 					"path": [
 						"music",
-						"addDislikes"
+						"getLikeCount"
 					]
 				}
 			},

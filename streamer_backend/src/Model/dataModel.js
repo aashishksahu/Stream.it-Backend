@@ -19,7 +19,6 @@ var dataModel = {
                 title: results[i]["title"],
                 artist: results[i]["artist"],
                 likes: results[i]["likes"],
-                dislikes: results[i]["dislikes"],
                 label: results[i]["label"],
                 albumart: this._img2base64(results[i]["albumart"])
             })
