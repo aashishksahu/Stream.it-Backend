@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 var conn = require('../database/createConnection');
 var dataModel = require("../Model/dataModel");
+var ms = require('mediaserver');
 
 /** Top Charts: Top 10 most liked songs **/
 var topCharts = (req, res) => {
@@ -294,8 +295,63 @@ var getLikeCountForSong = (req, res) => {
         }
     })
 }
-
 /* ---------- xxxx ---------- */
 
 
-module.exports = { topCharts, getFavourites, addToFavourites, removeFavourites, getLikeCountForSong, updateLikes };
+/** Streaming  **/
+var getAudioPath = async (audioid) => {
+    try {
+        return new Promise((resolve, reject) => {
+            conn.query(`SELECT audiofilepath FROM audioserver WHERE id=${audioid}`, (error, results) => {
+                if (error) {
+                    reject(false);
+                } else {
+                    resolve(results[0].audiofilepath);
+                }
+            })
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+var streamAudio = async (req, res) => {
+
+    try {
+        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
+        if (isVerified != undefined) {
+            // Fetch the file path for the requested audio ID
+            const audioPath = await getAudioPath(req.body.audioid);
+            
+            /**
+             * It isn't about show off, it's productive to use 
+             * a library that is properly tested instead of using
+             * my own speghatti code
+             * 
+             * Also, I tried creating my own streaming module
+             * by using readFileStream and send a stream of mp3
+             * file in chunks but It just doesn't work, so, here
+             * we are :( 
+             * 
+             * this is what I used
+             * https://github.com/obastemur/mediaserver
+             */
+            
+            ms.pipe(req, res, audioPath);
+
+            
+        }
+    } catch (error) {
+        console.log("[error]",error)
+        res.send({
+            code: 400,
+            "message": (error.code == undefined) ? "Unknown Error" : error.code
+        })
+    }
+
+
+}
+/* ---------- xxxx ---------- */
+
+module.exports = { topCharts, getFavourites, addToFavourites, removeFavourites, getLikeCountForSong, updateLikes, streamAudio };

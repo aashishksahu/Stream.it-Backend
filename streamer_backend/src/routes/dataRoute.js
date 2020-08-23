@@ -9,4 +9,6 @@ dataRouter.post('/addFavourites', dataController.addToFavourites);
 dataRouter.post('/removeFavourites', dataController.removeFavourites);
 dataRouter.post('/addLikes', dataController.updateLikes);
 
+dataRouter.get('/stream', dataController.streamAudio);
+
 module.exports = dataRouter;

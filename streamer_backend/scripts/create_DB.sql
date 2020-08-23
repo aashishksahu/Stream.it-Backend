@@ -46,7 +46,6 @@ insert INTO audioserver(
         id,
         title,
         artist,
-        likes,
         label,
         albumart,
         audiofilepath
@@ -55,16 +54,14 @@ VALUES(
         1,
         "Billie Jean",
         "Michael Jackson",
-        50,
         "Epic",
         "/home/aashish/WorkShop/Streamer/streamer_backend/assets/albumart/billie_jean_cover.jpg",
-        "/home/aashish/WorkShop/streamer_backend/assets/audio/michael_jackson_billie_jean.mp3"
+        "/home/aashish/WorkShop/Streamer/streamer_backend/assets/audio/michael_jackson_billie_jean.mp3"
     );
 insert INTO audioserver(
         id,
         title,
         artist,
-        likes,
         label,
         albumart,
         audiofilepath
@@ -73,16 +70,14 @@ VALUES(
         2,
         "Smooth Criminal",
         "Michael Jackson",
-        70,
         "Epic",
         "/home/aashish/WorkShop/Streamer/streamer_backend/assets/albumart/smooth_criminal_cover.jpg",
-        "/home/aashish/WorkShop/streamer_backend/assets/audio/michael_jackson_smooth_criminal.mp3"
+        "/home/aashish/WorkShop/Streamer/streamer_backend/assets/audio/michael_jackson_smooth_criminal.mp3"
     );
 insert INTO audioserver(
         id,
         title,
         artist,
-        likes,
         label,
         albumart,
         audiofilepath
@@ -91,10 +86,9 @@ VALUES(
         3,
         "I'm Bad",
         "Michael Jackson",
-        65,
         "Epic",
         "/home/aashish/WorkShop/Streamer/streamer_backend/assets/albumart/im_bad_cover.jpg",
-        "/home/aashish/WorkShop/streamer_backend/assets/audio/michael_jackson_im_bad.mp3"
+        "/home/aashish/WorkShop/Streamer/streamer_backend/assets/audio/michael_jackson_im_bad.mp3"
     );
 insert INTO users (id, username, usertype, passkey, email, DOB)
 VALUES(
