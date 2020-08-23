@@ -11,4 +11,9 @@ dataRouter.post('/addLikes', dataController.updateLikes);
 
 dataRouter.get('/stream', dataController.streamAudio);
 
+dataRouter.get('/search', dataController.finder);
+
+dataRouter.get('/comments', dataController.getCommentsForAudioID);
+dataRouter.post('/addComment', dataController.addComment);
+
 module.exports = dataRouter;

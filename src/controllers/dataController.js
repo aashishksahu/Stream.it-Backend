@@ -279,21 +279,34 @@ var updateLikes = async (req, res) => {
 }
 
 var getLikeCountForSong = (req, res) => {
-    conn.query(`select count(userid) as likes from likes group by audioid having audioid=${req.body.audioid}`, (error, results) => {
-        if (error) {
-            res.send({
-                code: 400,
-                "message": error.code
-            })
-        } else {
+    try {
+        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
+        if (isVerified != undefined) {
 
-            res.send({
-                code: 200,
-                "resultSet": results
-            })
+            conn.query(`select count(userid) as likes from likes group by audioid having audioid=${req.body.audioid}`, (error, results) => {
+                if (error) {
+                    res.send({
+                        code: 400,
+                        "message": error.code
+                    })
+                } else {
 
+                    res.send({
+                        code: 200,
+                        "resultSet": results
+                    })
+
+                }
+            })
         }
-    })
+
+    } catch (error) {
+        res.send({
+            code: 401,
+            "message": "Authorization Failure"
+        })
+    }
+
 }
 /* ---------- xxxx ---------- */
 
@@ -323,7 +336,7 @@ var streamAudio = async (req, res) => {
         if (isVerified != undefined) {
             // Fetch the file path for the requested audio ID
             const audioPath = await getAudioPath(req.body.audioid);
-            
+
             /**
              * It isn't about show off, it's productive to use 
              * a library that is properly tested instead of using
@@ -337,13 +350,13 @@ var streamAudio = async (req, res) => {
              * this is what I used
              * https://github.com/obastemur/mediaserver
              */
-            
+
             ms.pipe(req, res, audioPath);
-                
-            
+
+
         }
     } catch (error) {
-        console.log("[error]",error)
+        console.log("[error]", error)
         res.send({
             code: 400,
             "message": (error.code == undefined) ? "Unknown Error" : error.code
@@ -354,4 +367,107 @@ var streamAudio = async (req, res) => {
 }
 /* ---------- xxxx ---------- */
 
-module.exports = { topCharts, getFavourites, addToFavourites, removeFavourites, getLikeCountForSong, updateLikes, streamAudio };
+
+/** Streaming  **/
+var finder = (req, res) => {
+
+    try {
+        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
+        if (isVerified != undefined) {
+
+            var phrase = req.query.searchterm.toString().toLowerCase()
+
+            conn.query(`SELECT * FROM audioserver WHERE title LIKE '%${phrase}%' OR artist LIKE '%${req.query.searchterm}%'`, (error, results) => {
+                if (error) {
+                    res.send({
+                        code: 400,
+                        "message": error.code
+                    })
+                } else {
+
+                    res.send({
+                        code: 200,
+                        "resultSet": dataModel.createMetaPayload(results)
+                    })
+
+                }
+            })
+
+        }
+    } catch (error) {
+        console.log("[error]", error)
+        res.send({
+            code: 400,
+            "message": (error.code == undefined) ? "Unknown Error" : error.code
+        })
+    }
+
+}
+/* ---------- xxxx ---------- */
+
+/** Comments **/
+var getCommentsForAudioID = (req, res) => {
+    try {
+        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
+        if (isVerified != undefined) {
+
+            conn.query(`SELECT * FROM comments WHERE audioid=${req.body.audioid}`, (error, results) => {
+                if (error) {
+                    res.send({
+                        code: 400,
+                        "message": error.code
+                    })
+                } else {
+
+                    res.send({
+                        code: 200,
+                        "resultSet": results
+                    })
+                }
+            })
+
+        }
+    } catch (error) {
+        console.log("[error]", error)
+        res.send({
+            code: 400,
+            "message": (error.code == undefined) ? "Unknown Error" : error.code
+        })
+    }
+}
+
+var addComment = (req, res) => {
+    try {
+        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
+        if (isVerified != undefined) {
+
+            conn.query(`INSERT INTO comments (userid, audioid, comment) VALUES(${req.body.userid}, ${req.body.audioid}, '${req.body.comment}')`, (error, results) => {
+                if (error) {
+                    console.log(error)
+                    res.send({
+                        code: 400,
+                        "message": error.code
+                    })
+                } else {
+
+                    res.send({
+                        code: 201,
+                        "message": "record added"
+                    })
+                }
+            })
+
+        }
+    } catch (error) {
+        console.log("[error]", error)
+        res.send({
+            code: 400,
+            "message": (error.code == undefined) ? "Unknown Error" : error.code
+        })
+    }
+}
+/* ---------- xxxx ---------- */
+
+
+
+module.exports = { topCharts, getFavourites, addToFavourites, removeFavourites, getLikeCountForSong, updateLikes, streamAudio, finder, getCommentsForAudioID, addComment };
