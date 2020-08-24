@@ -5,6 +5,8 @@ var authroute = require("./src/routes/authRoute");
 var dataroute = require("./src/routes/dataRoute");
 
 var app = express();
+app.use(require('body-parser').urlencoded({ extended: false }));
+app.use(express.json());
 const port = 3030;
 
 app.use(function (req, res, next) {

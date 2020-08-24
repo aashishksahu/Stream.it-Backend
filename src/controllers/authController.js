@@ -34,7 +34,7 @@ var authController = {
                 var token = jwt.sign({ username: req.body.username, usertype: req.body.usertype }, process.env.SECRET_KEY);
                 res.send({
                     "code": 200,
-                    "success": "user registered sucessfully",
+                    "message": "user registered sucessfully",
                     "auth": true,
                     "token": token
                 });
@@ -44,7 +44,6 @@ var authController = {
     },
 
     login(req, res) {
-
         conn.query(`SELECT * FROM users where username='${req.body.username}'`, (error, results) => {
             if (error) {
                 console.log(error)
@@ -58,7 +57,7 @@ var authController = {
                         var token = jwt.sign({ username: req.body.username, usertype: req.body.usertype }, process.env.SECRET_KEY);
                         res.send({
                             "code": 200,
-                            "success": "user login sucessful",
+                            "message": "user login sucessful",
                             "auth": true,
                             "usertype": results[0].usertype,
                             "username": results[0].username,
@@ -67,13 +66,13 @@ var authController = {
                     } else {
                         res.send({
                             "code": 401,
-                            "success": "user login failed"
+                            "message": "user login failed"
                         });
                     }
                 } else {
                     res.send({
                         "code": 401,
-                        "success": "user does not exist"
+                        "message": "user does not exist"
                     });
                 }
             }
