@@ -90,6 +90,22 @@ VALUES(
         "/home/aashish/WorkShop/Streamer/assets/albumart/im_bad_cover.jpg",
         "/home/aashish/WorkShop/Streamer/assets/audio/michael_jackson_im_bad.mp3"
     );
+insert INTO audioserver(
+        id,
+        title,
+        artist,
+        label,
+        albumart,
+        audiofilepath
+    )
+VALUES(
+        4,
+        "Still D.R.E",
+        "Snoop dog Dr.Dre",
+        "Aftermath Interscope",
+        "/home/aashish/WorkShop/Streamer/assets/albumart/still_dre_cover.jpg",
+        "/home/aashish/WorkShop/Streamer/assets/audio/still_dre.mp3"
+    );
 insert INTO users (id, username, usertype, passkey, email, DOB)
 VALUES(
         100,

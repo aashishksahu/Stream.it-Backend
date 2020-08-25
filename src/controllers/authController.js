@@ -61,6 +61,7 @@ var authController = {
                             "auth": true,
                             "usertype": results[0].usertype,
                             "username": results[0].username,
+                            "userid": results[0].id,
                             "token": token
                         });
                     } else {

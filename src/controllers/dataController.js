@@ -40,9 +40,10 @@ var topCharts = (req, res) => {
 
 /** Favourites: User favourites **/
 var getFavouriteID = async (req, res) => {
+
     // STEP 1: Get the Audio ID for a given User ID
     return new Promise((resolve, reject) => {
-        conn.query(`SELECT audioid FROM favourites WHERE userid=${req.body["userid"]}`, (error, results) => {
+        conn.query(`SELECT audioid FROM favourites WHERE userid='${req.query.userid}'`, (error, results) => {
             if (error) {
                 console.log("err: ", error.message)
                 res.send({
@@ -61,22 +62,21 @@ var getFavouriteID = async (req, res) => {
 }
 
 var getFavouriteList = async (resultSet) => {
+
     // STEP 2: Get the audio meta data for the requested Audio ID 
     return new Promise((resolve, reject) => {
 
         // convert resultSet object values to an array
         var ids = [];
+
         for (let i in resultSet) {
             ids.push(resultSet[i].audioid)
         }
 
-        conn.query(`SELECT * FROM audioserver where id in (${ids})`, (error, results) => {
+        conn.query(`SELECT * FROM audioserver where id in (${ids});`, (error, results) => {
+
             if (error) {
                 console.log("err: ", error.message)
-                res.send({
-                    code: 400,
-                    "message": `Error Occured: ${error.code}`
-                })
                 reject(false);
             } else {
                 resolve(results);
@@ -93,19 +93,27 @@ var getFavourites = async (req, res) => {
         if (isVerified != undefined) {
 
             var IDList = await getFavouriteID(req, res);
-            var favList = await getFavouriteList(IDList);
+            var favList = await getFavouriteList(IDList, req, res);
+
             if (favList.length > 0 && favList != undefined) {
+
                 res.send({
                     code: 200,
                     results: dataModel.createMetaPayload(favList)
+                })
+            } else {
+                res.send({
+                    code: 401,
+                    results: favList
                 })
             }
         }
 
     } catch (error) {
+        console.log(error)
         res.send({
             code: 401,
-            "message": error.code
+            "message": (error.code) ? error.code : "Unknown Error"
         })
     }
 }
