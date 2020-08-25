@@ -5,8 +5,6 @@ var ms = require('mediaserver');
 
 /** Top Charts: Top 10 most liked songs **/
 var topCharts = (req, res) => {
-
-
     try {
         var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
 
