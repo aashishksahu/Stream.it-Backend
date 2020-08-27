@@ -377,6 +377,10 @@ var finder = (req, res) => {
 
             var phrase = req.query.searchterm.toString().toLowerCase()
 
+            if (phrase == "") {
+                throw {"code": []}
+            }
+
             conn.query(`SELECT * FROM audioserver WHERE title LIKE '%${phrase}%' OR artist LIKE '%${req.query.searchterm}%'`, (error, results) => {
                 if (error) {
                     res.send({

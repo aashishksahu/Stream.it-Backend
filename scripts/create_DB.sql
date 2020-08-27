@@ -106,6 +106,38 @@ VALUES(
         "/home/aashish/WorkShop/Streamer/assets/albumart/still_dre_cover.jpg",
         "/home/aashish/WorkShop/Streamer/assets/audio/still_dre.mp3"
     );
+insert INTO audioserver(
+        id,
+        title,
+        artist,
+        label,
+        albumart,
+        audiofilepath
+    )
+VALUES(
+        5,
+        "Sandstorm",
+        "Darude",
+        "16 Inch",
+        "/home/aashish/WorkShop/Streamer/assets/albumart/darude_sandstorm_cover.jpg",
+        "/home/aashish/WorkShop/Streamer/assets/audio/darude_sandstorm.mp3"
+    );
+insert INTO audioserver(
+        id,
+        title,
+        artist,
+        label,
+        albumart,
+        audiofilepath
+    )
+VALUES(
+        6,
+        "Rolex",
+        "Ayo and Teo",
+        "‎Columbia‎",
+        "/home/aashish/WorkShop/Streamer/assets/albumart/rolex_cover.jpg",
+        "/home/aashish/WorkShop/Streamer/assets/audio/rolex.mp3"
+    );
 insert INTO users (id, username, usertype, passkey, email, DOB)
 VALUES(
         100,
