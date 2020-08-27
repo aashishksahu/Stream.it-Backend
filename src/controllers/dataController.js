@@ -338,29 +338,23 @@ var getAudioPath = async (audioid) => {
 var streamAudio = async (req, res) => {
 
     try {
-        var isVerified = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
-        if (isVerified != undefined) {
-            // Fetch the file path for the requested audio ID
-            const audioPath = await getAudioPath(req.body.audioid);
+        // Fetch the file path for the requested audio ID
+        const audioPath = await getAudioPath(req.query.audioid);
 
-            /**
-             * It isn't about show off, it's productive to use 
-             * a library that is properly tested instead of using
-             * my own speghatti code
-             * 
-             * Also, I tried creating my own streaming module
-             * by using readFileStream and send a stream of mp3
-             * file in chunks but It just doesn't work, so, here
-             * we are :( 
-             * 
-             * this is what I used
-             * https://github.com/obastemur/mediaserver
-             */
+        /**
+         * I tried creating my own streaming module
+         * by using readFileStream and send a stream of mp3
+         * file in chunks but It just doesn't work, so, here
+         * we are :( 
+         * 
+         * can't make JWT work with mediaserver
+         * 
+         * this is what I used
+         * https://github.com/obastemur/mediaserver
+         */
 
-            ms.pipe(req, res, audioPath);
+        ms.pipe(req, res, audioPath);
 
-
-        }
     } catch (error) {
         console.log("[error]", error)
         res.send({
@@ -374,7 +368,7 @@ var streamAudio = async (req, res) => {
 /* ---------- xxxx ---------- */
 
 
-/** Streaming  **/
+/** Search  **/
 var finder = (req, res) => {
 
     try {
